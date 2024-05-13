@@ -24,11 +24,15 @@ export default function Home() {
     function registerUser(){
         router.push("/register")
     }
+
+    function goToList(){
+        router.push("/listHome")
+    }
     return (
         <View className="flex-1 flex-col">
 
 
-            <ImageBackground className="flex-1 flex-col p-8 mt-10" source={require("@/assets/img/fundo.jpg")}>
+            <ImageBackground className="flex-1 flex-col p-8" source={require("@/assets/img/fundo.jpg")}>
                 <StatusBar barStyle="light-content" />
                 <View className="justify-center items-center ">
                     <Image
@@ -53,6 +57,7 @@ export default function Home() {
                     </Input>
 
                     <Button title="Login" onPress={registerUser} ></Button>
+                    <Button title="ir para listagem" onPress={goToList} ></Button>
                 </View>
 
             </ImageBackground>

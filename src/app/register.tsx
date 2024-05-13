@@ -29,7 +29,7 @@ export default function Register() {
         <View className="flex-1 flex-col">
 
 
-            <ImageBackground className="flex-1 flex-col p-8 mt-10" source={require("@/assets/img/fundo.jpg")}>
+            <ImageBackground className="flex-1 flex-col p-8" source={require("@/assets/img/fundo.jpg")}>
                 <StatusBar barStyle="light-content" />
                 <View className="justify-center items-center ">
                     <Image
