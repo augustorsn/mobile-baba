@@ -2,17 +2,16 @@ import { Button } from "@/components/button"
 import { Item } from "@/components/item";
 import { ItemListStore, useItemListStore } from "@/store/item-lista-store";
 import { router } from "expo-router"
-import React from "react"
+import React, { useState } from "react"
 import { View, Text, ImageBackground, Image, StatusBar, StyleSheet, FlatList } from "react-native"
 
 
 
 export default function ListHome() {
-
+    let [id,setId] = useState(1)
     
     const itemListStore = useItemListStore()
-    console.log("items = >", itemListStore.data)  
-    let id = 1  
+    console.log("items = >", itemListStore.data)        
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -48,7 +47,8 @@ export default function ListHome() {
     }
     function updateItemList(items: ItemListStore): void | undefined {
         console.log("foi", items)
-        items.nome = "icaro"
+        setId(id+1)
+        items.nome = `Miss Coelho${id}`
         itemListStore.update(items)
         console.log("nova lista", itemListStore.data)
 
