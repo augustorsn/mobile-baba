@@ -1,10 +1,18 @@
 import { Button } from "@/components/button"
 import { Item } from "@/components/item";
+import { ItemListStore, useItemListStore } from "@/store/item-lista-store";
 import { router } from "expo-router"
 import React from "react"
 import { View, Text, ImageBackground, Image, StatusBar, StyleSheet, FlatList } from "react-native"
 
+
+
 export default function ListHome() {
+
+    
+    const itemListStore = useItemListStore()
+    console.log("items = >", itemListStore.data)  
+    let id = 1  
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -26,30 +34,27 @@ export default function ListHome() {
         router.push("/")
     }
 
-    let dadosLista = [
-        { key: 'Guto' },
-        { key: 'Alisson Schweinsteiger' },
-        { key: 'Icaro' },
-        { key: 'Ruan' },
-        { key: 'Alan' },
-        { key: 'Indio' },
-        { key: 'Feinho' },
-        { key: 'Adebabol' },
-        { key: 'Vinny' },
-        { key: 'Sam' },
-        { key: 'Devin' },
-        { key: 'Dan' },
-        { key: 'Dominic' },
-        { key: 'Jackson' },
-        { key: 'James' },
-        { key: 'Joel' },
-        { key: 'John' },
-        { key: 'Jillian' },
-        { key: 'Jimmy' },
-        { key: 'Julie' },
-        
-    ]
 
+    function removeItemList(items: ItemListStore): void | undefined {
+        console.log("foi", items)
+        itemListStore.remove(items.id)
+        console.log("nova lista", itemListStore.data)
+
+    }
+
+    function goToIncrement() {        
+        itemListStore.save({ id: '1', nome: `Guto` })
+      
+    }
+    function updateItemList(items: ItemListStore): void | undefined {
+        console.log("foi", items)
+        items.nome = "icaro"
+        itemListStore.update(items)
+        console.log("nova lista", itemListStore.data)
+
+    }
+
+    
 
     return (
         <View className="flex-1 flex-col w-full">
@@ -69,13 +74,15 @@ export default function ListHome() {
                 <Text className="mt-5 mb-5" style={styles.item}>Lista de Pedras Bebas</Text>
                 <FlatList
                     className="h-10"
-                    data={dadosLista}
-                    renderItem={({ item }) => <Item item={item.key}></Item>}
+                    data={itemListStore.data}
+                    renderItem={({ item }) => <Item updateItemList={() => updateItemList(item)} removeItemList={() => removeItemList(item)} item={item}></Item>}
                 />
 
 
 
                 <Button title="Voltar Para Login" onPress={goToLogin} ></Button>
+                <Button title="Increment item list" onPress={goToIncrement} ></Button>
+                
 
 
             </ImageBackground>

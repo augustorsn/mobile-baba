@@ -2,12 +2,17 @@ import React from "react";
 import { View, Text, ImageBackground, Image, StatusBar, StyleSheet, SectionList } from "react-native"
 import { Button } from "./button";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { ItemListStore } from "@/store/item-lista-store";
 
 type Props = {
-    item: string
+    item: ItemListStore
+    removeItemList?: () => void
+    updateItemList?: () => void
 }
 
-export function Item({ item }: Props) {
+
+
+export function Item({ removeItemList,updateItemList, item }: Props) {
     const styles = StyleSheet.create({
         container: {
             paddingTop: 50,
@@ -37,10 +42,10 @@ export function Item({ item }: Props) {
     });
     return (
         <View className="flex-row items-center w-full flex-wrap justify-between bg-gray-400">
-            <Text style={styles.item}>{item}</Text>
+            <Text style={styles.item}>{item.nome}</Text>
             <View className="flex-row items-end">
-                <Button title="Remover" className="w-20" />
-                <Button title="Editar" className="w-20" />
+                <Button onPress={removeItemList} title="Remover" className="w-20" />
+                <Button onPress={updateItemList} title="Editar" className="w-20" />
             </View>
 
 
