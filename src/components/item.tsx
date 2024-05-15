@@ -42,7 +42,7 @@ export function Item({ removeItemList,updateItemList, item }: Props) {
     });
     return (
         <View className="flex-row items-center w-full flex-wrap justify-between bg-gray-400">
-            <Text style={styles.item}>{item.nome}</Text>
+            <Text  style={styles.item}>{item.nome}</Text>
             <View className="flex-row items-end">
                 <Button onPress={removeItemList} title="Remover" className="w-20" />
                 <Button onPress={updateItemList} title="Editar" className="w-20" />
