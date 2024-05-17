@@ -20,7 +20,7 @@ type StateProps = {
 
 export const useItemListStore = create(
     persist<StateProps>(
-        (set,get) => ({
+        (set) => ({
             data: [],
             save: (data) => {
                 set((state) => ({
