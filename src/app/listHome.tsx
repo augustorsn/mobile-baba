@@ -111,7 +111,7 @@ export default function ListHome() {
             <DialogInput
                 isDialogVisible={visibleDialog}
                 title={"Nova pedra beba"}
-                message={"Deseja mudar o nome da pedrinha beba?"}
+                message={`Deseja mudar o nome '${parcialUsuario?.nome}?'`}
                 hintInput={"Feinho...."}
                 initValueTextInput={parcialUsuario?.nome}
                 submitInput={(inputText) => {
