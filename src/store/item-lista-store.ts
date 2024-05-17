@@ -11,8 +11,8 @@ export type ItemListStore = {
 type StateProps = {
     data: ItemListStore[]
     save: (data: ItemListStore) => void
-    remove: (id: any) => void;
-    // remove: () => void
+    
+    remove: (id: any) => void;  
     update: (data: ItemListStore) => void
     removeAll: () => void
 }
@@ -20,7 +20,7 @@ type StateProps = {
 
 export const useItemListStore = create(
     persist<StateProps>(
-        (set) => ({
+        (set,get) => ({
             data: [],
             save: (data) => {
                 set((state) => ({
@@ -39,10 +39,11 @@ export const useItemListStore = create(
                     data: state.data.filter((item) => item.id !== id),
                 }));
             },
+           
             update: (data) => {
                 set((state) => ({
                     data: state.data.map((item) =>
-                        item.id === data.id
+                        item.id.trim() === data.id.trim()
                             ? ({ ...item, nome: item.nome } as ItemListStore)
                             : item
                     ),

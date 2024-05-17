@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, ImageBackground, Image, StatusBar, StyleSheet, SectionList } from "react-native"
 import { Button } from "./button";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { ItemListStore } from "@/store/item-lista-store";
+import { ItemListStore, useItemListStore } from "@/store/item-lista-store";
+import DialogInput from "react-native-dialog-input";
 
 type Props = {
     item: ItemListStore
     removeItemList?: () => void
-    updateItemList?: () => void
+    openDialog?: () => void
 }
 
 
 
-export function Item({ removeItemList,updateItemList, item }: Props) {
+export function Item({ removeItemList, openDialog, item }: Props) {        
+
+
     const styles = StyleSheet.create({
         container: {
             paddingTop: 50,
@@ -40,16 +43,17 @@ export function Item({ removeItemList,updateItemList, item }: Props) {
             height: 44,
         },
     });
+
+  
     return (
+        
         <View className="flex-row items-center w-full flex-wrap justify-between bg-gray-400">
-            <Text  style={styles.item}>{item.nome}</Text>
+          
+            <Text style={styles.item}>{item.nome}</Text>
             <View className="flex-row items-end">
                 <Button onPress={removeItemList} title="Remover" className="w-20" />
-                <Button onPress={updateItemList} title="Editar" className="w-20" />
+                <Button onPress={openDialog} title="Editar" className="w-20" />
             </View>
-
-
-
         </View>
 
     )

@@ -12,6 +12,7 @@ import { View, Text, ImageBackground, Image, StatusBar, StyleSheet, FlatList, Al
 import ActionButton from 'react-native-action-button';
 import Icon from '@expo/vector-icons/Ionicons';
 import { LogBox } from "react-native"
+import DialogInput from "react-native-dialog-input";
 
 
 
@@ -26,9 +27,10 @@ export default function ListHome() {
 
     // Ignore all log notifications
     LogBox.ignoreAllLogs();
-    let [id, setId] = useState(1)
-    let [nomePedrinha, setNomePedrinha] = useState("")
 
+    let [nomePedrinha, setNomePedrinha] = useState("")
+    const [visibleDialog, setVisibleDialog] = useState(false)
+    let [parcialUsuario, setParcialUsuario] = useState<ItemListStore>();
     const itemListStore = useItemListStore()
     console.log("items = >", itemListStore.data)
     const styles = StyleSheet.create({
@@ -72,33 +74,54 @@ export default function ListHome() {
         itemListStore.save({ id: '1', nome: `Guto` })
 
     }
-    function updateItemList(items: ItemListStore): void | undefined {
-        console.log("foi", items)
-        setId(id + 1)
-        items.nome = `Miss Coelho${id}`
-        itemListStore.update(items)
-        console.log("nova lista", itemListStore.data)
-
-    }
 
     function insertPerson() {
         console.log("foi =>", nomePedrinha)
         if (!nomePedrinha.trim()) {
             return Alert.alert("Cadastro", "Preencha o nome da pedra beba!")
         }
-       
+
         itemListStore.save({ id: '1', nome: `${nomePedrinha}` })
         setNomePedrinha('')
 
         Alert.alert("Cadastro", "Pedra beba adicionada com sucesso!")
     }
 
+    function openDialog(items: ItemListStore) {
+        setParcialUsuario(items)
+        setVisibleDialog(true)
+        
+    }
 
+    function updatePerson(nomeString: string) {
+        if(parcialUsuario){
+            let dataed = itemListStore.data.find((item) => item.id === parcialUsuario.id)
+            console.log(dataed)
+            if (dataed) {
+                dataed.nome = nomeString.trim()
+                itemListStore.update(dataed)
+            }
+        }
+        
+    }
 
     return (
 
         <View className="flex-1 flex-col w-full">
-
+            <DialogInput
+                isDialogVisible={visibleDialog}
+                title={"Nova pedra beba"}
+                message={"Deseja mudar o nome da pedrinha beba?"}
+                hintInput={"Feinho...."}
+                initValueTextInput={parcialUsuario?.nome}
+                submitInput={(inputText) => {
+                    setVisibleDialog(false),
+                        updatePerson(inputText);
+                }}
+                cancelText="cancelar"
+                submitText="Enviar"
+                closeDialog={() => setVisibleDialog(false)}>
+            </DialogInput>
 
             <ImageBackground className="flex-1 flex-col p-8" source={require("@/assets/img/fundo.jpg")}>
                 <StatusBar barStyle="light-content" />
@@ -141,11 +164,15 @@ export default function ListHome() {
 
                 </View>
 
-                <FlatList
-                    className="h-10"
-                    data={itemListStore.data}
-                    renderItem={({ item }) => <Item updateItemList={() => updateItemList(item)} removeItemList={() => removeItemList(item)} item={item}></Item>}
-                />
+
+                <View className="flex-1">
+                    <FlatList
+
+                        data={itemListStore.data}
+                        renderItem={({ item }) => <Item openDialog={() => openDialog(item)} removeItemList={() => removeItemList(item)} item={item}></Item>}
+                    />
+
+                </View>
 
 
 
