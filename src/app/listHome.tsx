@@ -110,11 +110,9 @@ export default function ListHome() {
                 dataed.nome = nomeString.trim()
                 itemListStore.update(dataed)
             }
-        }
-        
+        }        
     }
-
-    const getItemCount = useItemListStore((state) => state.getItemCount());
+    
     
 
     return (
