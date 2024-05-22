@@ -9,19 +9,19 @@ export type ItemListStore = {
 }
 
 type StateProps = {
-    data: ItemListStore[]
+    data: ItemListStore[]    
     save: (data: ItemListStore) => void
-    
-    remove: (id: any) => void;  
+    remove: (id: any) => void;
     update: (data: ItemListStore) => void
     removeAll: () => void
+    getItemCount: () => number;
 }
 
 
 export const useItemListStore = create(
     persist<StateProps>(
-        (set) => ({
-            data: [],
+        (set,get) => ({
+            data: [],            
             save: (data) => {
                 set((state) => ({
                     data: [...state.data, { id: uuid.v4(), nome: data.nome } as ItemListStore],
@@ -39,7 +39,7 @@ export const useItemListStore = create(
                     data: state.data.filter((item) => item.id !== id),
                 }));
             },
-           
+
             update: (data) => {
                 set((state) => ({
                     data: state.data.map((item) =>
@@ -49,8 +49,11 @@ export const useItemListStore = create(
                     ),
                 }));
             },
+            getItemCount: () => get().data.length,
+
+
 
         }), {
-        name: "mobile:itemList72",
+        name: "mobile:itemListt",
         storage: createJSONStorage(() => AsyncStorage)
     }))

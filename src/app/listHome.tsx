@@ -31,8 +31,13 @@ export default function ListHome() {
     let [nomePedrinha, setNomePedrinha] = useState("")
     const [visibleDialog, setVisibleDialog] = useState(false)
     let [parcialUsuario, setParcialUsuario] = useState<ItemListStore>();
-    const itemListStore = useItemListStore()
+    const itemListStore = useItemListStore()   
+    
     console.log("items = >", itemListStore.data)
+    console.log("items qtd = >", itemListStore.getItemCount())
+    
+    
+    
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -61,6 +66,10 @@ export default function ListHome() {
     function goToLogin() {
         router.push("/")
     }
+    function goToSorteio() {
+        router.push("/sorteio")
+    }
+
 
 
     function removeItemList(items: ItemListStore): void | undefined {
@@ -105,6 +114,9 @@ export default function ListHome() {
         
     }
 
+    const getItemCount = useItemListStore((state) => state.getItemCount());
+    
+
     return (
 
         <View className="flex-1 flex-col w-full">
@@ -123,7 +135,9 @@ export default function ListHome() {
                 closeDialog={() => setVisibleDialog(false)}>
             </DialogInput>
 
-            <ImageBackground className="flex-1 flex-col p-8" source={require("@/assets/img/fundo.jpg")}>
+            <ImageBackground className="flex-1 flex-col p-8" source={require("@/assets/img/campo_fundo.png")}
+                resizeMode="stretch"
+            >
                 <StatusBar barStyle="light-content" />
                 <View className="justify-center items-center ">
                     <Image
@@ -134,7 +148,7 @@ export default function ListHome() {
 
                 </View>
 
-                <Text className="mt-5 mb-5 p-3 h-11">Lista de Pedras Bebas</Text>
+                <Text className="mt-5 mb-5 p-3 h-11">Lista de Pedras Bebas qtd itens  </Text>
                 <View className="flex-row">
                     <InputList >
                         <FontAwesome6
@@ -164,7 +178,7 @@ export default function ListHome() {
 
                 </View>
 
-
+               <Text > Total de pedras bebas na lista = {itemListStore.getItemCount()}  </Text>
                 <View className="flex-1">
                     <FlatList
 
@@ -178,6 +192,7 @@ export default function ListHome() {
 
                 <Button title="Voltar Para Login" onPress={goToLogin} ></Button>
                 <Button title="Increment item list" onPress={goToIncrement} ></Button>
+                <Button title="Sorteio" onPress={goToSorteio} ></Button>
 
 
 
