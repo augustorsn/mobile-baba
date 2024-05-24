@@ -146,7 +146,7 @@ export default function ListHome() {
 
                 </View>
 
-                <Text className="mt-5 mb-5 p-3 h-11">Lista de Pedras Bebas qtd itens  </Text>
+                <Text className="mt-5 mb-5 p-3 h-11 text-4xl text-slate-900">Quantidade de Pedras {itemListStore.data.length} </Text>
                 <View className="flex-row">
                     <InputList >
                         <FontAwesome6
@@ -175,8 +175,7 @@ export default function ListHome() {
                     </View>
 
                 </View>
-
-               <Text > Total de pedras bebas na lista = {itemListStore.getItemCount()}  </Text>
+               
                 <View className="flex-1">
                     <FlatList
 
