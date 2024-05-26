@@ -35,6 +35,7 @@ export default function ListHome() {
     
     console.log("items = >", itemListStore.data)
     console.log("items qtd = >", itemListStore.getItemCount())
+    console.log("items  team One= >", itemListStore.teamOne)
     
     
     
@@ -80,7 +81,7 @@ export default function ListHome() {
     }
 
     function goToIncrement() {
-        itemListStore.save({ id: '1', nome: `Guto` })
+        itemListStore.addGenericList({ id: '1', nome: `Guto` }, 'teamOne')
 
     }
 

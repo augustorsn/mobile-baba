@@ -9,19 +9,32 @@ export type ItemListStore = {
 }
 
 type StateProps = {
-    data: ItemListStore[]    
+    data: ItemListStore[]
+    dataTemp: ItemListStore[]
+    teamOne: ItemListStore[]
+    teamTwo: ItemListStore[]
+    teamThree: ItemListStore[]
+    teamFour: ItemListStore[]
     save: (data: ItemListStore) => void
     remove: (id: any) => void;
     update: (data: ItemListStore) => void
     removeAll: () => void
-    getItemCount: () => number;
+    getItemCount: () => number
+    resetAllTeams: () => void
+    addGenericList: (data: ItemListStore, nameList: string) => void
 }
+
 
 
 export const useItemListStore = create(
     persist<StateProps>(
-        (set,get) => ({
-            data: [],            
+        (set, get) => ({
+            data: [],
+            dataTemp: [],
+            teamOne: [],
+            teamTwo: [],
+            teamThree: [],
+            teamFour: [],
             save: (data) => {
                 set((state) => ({
                     data: [...state.data, { id: uuid.v4(), nome: data.nome } as ItemListStore],
@@ -50,6 +63,44 @@ export const useItemListStore = create(
                 }));
             },
             getItemCount: () => get().data.length,
+
+            resetAllTeams: () => {
+                set({
+                    dataTemp: [],
+                    teamOne: [],
+                    teamTwo: [],
+                    teamThree: [],
+                    teamFour: [],
+                });
+            },
+
+            addGenericList: (data, nameList) => {
+                if (nameList === 'teamOne') {
+                    set((state) => ({
+                        teamOne: [...state.teamOne, { id: uuid.v4(), nome: data.nome } as ItemListStore],
+                    }));
+                } else if (nameList === 'teamTwo') {
+                    set((state) => ({
+                        teamTwo: [...state.teamTwo, { id: uuid.v4(), nome: data.nome } as ItemListStore],
+                    }));
+                } else if (nameList === 'teamThree') {
+                    set((state) => ({
+                        teamThree: [...state.teamThree, { id: uuid.v4(), nome: data.nome } as ItemListStore],
+                    }));
+                } else if (nameList === 'teamFour') {
+                    set((state) => ({
+                        teamFour: [...state.teamFour, { id: uuid.v4(), nome: data.nome } as ItemListStore],
+                    }));
+                } else if (nameList === 'data') {
+                    set((state) => ({
+                        data: [...state.data, { id: uuid.v4(), nome: data.nome } as ItemListStore],
+                    }));
+                } else if (nameList === 'dataTemp') {
+                    set((state) => ({
+                        dataTemp: [...state.dataTemp, { id: uuid.v4(), nome: data.nome } as ItemListStore],
+                    }));
+                }
+            },
 
 
 
