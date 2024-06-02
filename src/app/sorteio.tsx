@@ -21,6 +21,13 @@ export default function Sorteio() {
 
     // Ignore all log notifications
     LogBox.ignoreAllLogs();
+    const itemListStore = useItemListStore()
+
+    
+    console.log("Team One = >", itemListStore.teamOne)
+    console.log("Team Two = >", itemListStore.teamTwo)
+    console.log("Team Three = >", itemListStore.teamThree)
+    console.log("Team Four = >", itemListStore.teamFour)
 
     const styles = StyleSheet.create({
         logo: {
@@ -51,6 +58,7 @@ export default function Sorteio() {
                 </View>
 
                 <Text className="mt-5 mb-5 p-3 h-11">Sorteio</Text>              
+                <Text className="mt-5 mb-5 p-3 h-11"></Text> 
 
 
                 <Button title="Voltar Para Login" onPress={goToLogin} ></Button>

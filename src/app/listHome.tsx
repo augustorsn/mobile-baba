@@ -31,14 +31,11 @@ export default function ListHome() {
     let [nomePedrinha, setNomePedrinha] = useState("")
     const [visibleDialog, setVisibleDialog] = useState(false)
     let [parcialUsuario, setParcialUsuario] = useState<ItemListStore>();
-    const itemListStore = useItemListStore()   
+    const itemListStore = useItemListStore()
     
-    console.log("items = >", itemListStore.data)
-    console.log("items qtd = >", itemListStore.getItemCount())
-    console.log("items  team One= >", itemListStore.teamOne)
-    
-    
-    
+
+
+
     const styles = StyleSheet.create({
         container: {
             flex: 1,
@@ -67,7 +64,57 @@ export default function ListHome() {
     function goToLogin() {
         router.push("/")
     }
-    function goToSorteio() {
+    function goToSorteio() {      
+        let pedrinhas = itemListStore.data
+        let teamOne = []
+        let teamTwo = []
+        let teamThree = []
+        let teamFour = []
+        let totalArrayJogadores = itemListStore.data.length - 1
+        let totalArrayJogadoresIncrement = itemListStore.data.length - 1
+
+        
+        for (var i = 0; i <= totalArrayJogadores; i++) {
+            let MAX = totalArrayJogadoresIncrement;
+            let rafflePosition = MAX;
+            if (!(MAX == 0)) {
+                rafflePosition = Math.floor(Math.random() * MAX) + 1;
+            }
+          
+
+            if (teamOne.length < 5) {
+                teamOne.push(pedrinhas[rafflePosition])
+                pedrinhas = pedrinhas.filter(item => item.id !== pedrinhas[rafflePosition].id)
+                totalArrayJogadoresIncrement = totalArrayJogadoresIncrement - 1
+                continue;
+            }
+            if (teamTwo.length < 5) {
+                teamTwo.push(pedrinhas[rafflePosition])
+                pedrinhas = pedrinhas.filter(item => item.id !== pedrinhas[rafflePosition].id)
+                totalArrayJogadoresIncrement = totalArrayJogadoresIncrement - 1
+                continue;
+            }
+
+            if (teamThree.length < 5) {
+                teamThree.push(pedrinhas[rafflePosition])
+                pedrinhas = pedrinhas.filter(item => item.id !== pedrinhas[rafflePosition].id)
+                totalArrayJogadoresIncrement = totalArrayJogadoresIncrement - 1
+                continue;
+            }
+
+            if (teamFour.length < 5) {
+                teamFour.push(pedrinhas[rafflePosition])
+                pedrinhas = pedrinhas.filter(item => item.id !== pedrinhas[rafflePosition].id)
+                totalArrayJogadoresIncrement = totalArrayJogadoresIncrement - 1
+                continue;
+            }
+            
+        }
+      
+        itemListStore.teamOne = teamOne
+        itemListStore.teamTwo = teamTwo
+        itemListStore.teamThree = teamThree
+        itemListStore.teamFour = teamFour
         router.push("/sorteio")
     }
 
@@ -100,21 +147,21 @@ export default function ListHome() {
     function openDialog(items: ItemListStore) {
         setParcialUsuario(items)
         setVisibleDialog(true)
-        
+
     }
 
     function updatePerson(nomeString: string) {
-        if(parcialUsuario){
+        if (parcialUsuario) {
             let dataed = itemListStore.data.find((item) => item.id === parcialUsuario.id)
             console.log(dataed)
             if (dataed) {
                 dataed.nome = nomeString.trim()
                 itemListStore.update(dataed)
             }
-        }        
+        }
     }
-    
-    
+
+
 
     return (
 
@@ -176,7 +223,7 @@ export default function ListHome() {
                     </View>
 
                 </View>
-               
+
                 <View className="flex-1">
                     <FlatList
 
